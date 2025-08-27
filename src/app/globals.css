@@ -1,0 +1,193 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Clases de utilidad para texto truncado */
+.truncated-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Número de líneas visibles */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncated-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Número de líneas visibles */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncated-text-carousel {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Widget Ticker */
+.ticker-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ticker-wrapper {
+  display: flex;
+  animation: scroll 35s linear infinite; /* Duración uniforme */
+}
+
+.ticker-wrapper:hover {
+  animation-play-state: paused; /* Pausa la animación al hacer hover */
+}
+
+.ticker-item {
+  flex-shrink: 0; /* Evita que los elementos se reduzcan */
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(100%); /* Empieza fuera del contenedor */
+  }
+  to {
+    transform: translateX(-150%); /* Sale por el otro lado */
+  }
+}
+
+/* Iconos de redes sociales */
+.icon-redes {
+  font-size: 30px;
+  color: #282828;
+  transition: color 0.3s ease;
+}
+
+.icon-redes:hover {
+  color: #6d5efc;
+}
+
+/* Navbar */
+.navbar-nav {
+  align-items: center;
+  gap: 20px;
+}
+
+.collapse {
+  visibility: visible;
+  display: flex;
+  justify-content: center;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Oculta el checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider que actúa como fondo */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+/* Posición inicial del ícono */
+.slider i {
+  font-size: 18px;
+  transition: 0.4s;
+}
+
+/* Cuando el checkbox está marcado */
+.toggle-switch input:checked + .slider {
+  background-color: #333;
+}
+
+/* Estilos para dark mode */
+body.dark-mode {
+  background-color: #192229;
+  color: #e0e0e0;
+}
+
+body.dark-mode .card {
+  background-color: #1e2a33; /* Color oscuro para la card */
+  color: #e0e0e0; /* Texto claro para contraste */
+  border: 1px solid #2a3b47; /* Borde más visible en modo oscuro */
+}
+
+body.dark-mode .truncated-text {
+  color: #b0b0b0;
+}
+
+body.dark-mode small {
+  color: white;
+}
+
+body.dark-mode .fa-brands {
+  color: white;
+}
+
+body.dark-mode .icon-redes {
+  color: white;
+}
+
+body.dark-mode .icon-redes:hover {
+  color: #6d5efc;
+}
+
+/* Estilos específicos para pantallas pequeñas */
+@media (max-width: 480px) {
+  .collapse {
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .collapse.show {
+    visibility: visible;
+    height: auto;
+  }
+
+  .ticker-wrapper {
+    animation: scroll 25s linear infinite; /* Duración uniforme */
+  }
+
+  .truncated-text-carousel {
+    -webkit-line-clamp: 6;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(100%); /* Empieza fuera del contenedor */
+    }
+    to {
+      transform: translateX(-700%); /* Sale por el otro lado */
+    }
+  }
+}
