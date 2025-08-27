@@ -15,6 +15,7 @@ export async function query(url: string) {
     const fullUrl = `${STRAPI_HOST}/api/${url}`;
     console.log('Fetching from:', fullUrl); // Debug
 
+    
     try {
         const response = await fetch(fullUrl, {
             headers: {
