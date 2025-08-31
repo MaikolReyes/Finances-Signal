@@ -1,19 +1,21 @@
 import { useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
 import { ArticlesContext } from "../context";
 
 export const useArticlesLanguage = () => {
-
-    const { slug } = useParams();
     const { articles, language } = useContext(ArticlesContext);
-    const navigate = useNavigate();
+    const router = useRouter();
+    const params = useParams();
 
-    // Buscar el artículo actual por título
-    const currentArticle = articles?.find((article) => article.slug === slug);
+    // params.slug viene de la ruta [slug]
+    const slug = params.slug as string;
+
+    // Buscar el artículo actual por slug
+    const currentArticle = articles?.find(article => article.slug === slug);
 
     const localizations = currentArticle?.localizations;
 
-    // Si deseas acceder a la primera localización
+    // Primera localización si existe
     const firstLocalization = localizations?.[0];
 
     // Buscar la versión traducida según el idioma
@@ -22,10 +24,9 @@ export const useArticlesLanguage = () => {
     // Navegar a la versión traducida si es necesario
     useEffect(() => {
         if (translatedArticle && translatedArticle.slug !== slug) {
-            navigate(`/article/${translatedArticle.slug}`, { replace: true });
+            router.replace(`/article/${translatedArticle.slug}`);
         }
-    }, [translatedArticle, slug, navigate]);
+    }, [translatedArticle, slug, router]);
 
     return currentArticle;
 };
-

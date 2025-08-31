@@ -1,17 +1,18 @@
 "use client"
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useRecentArticles } from "../hooks/useRecenArticles";
-import { BlocksRenderer } from '@strapi/blocks-react-renderer';
-import Link from "next/link";
+import { getCdnUrl } from "@/utils/getCdnUrl";
 import Image from "next/image";
+import Link from "next/link";
 
 export const NewsDown = () => {
 
     const recentArticles = useRecentArticles();
 
     return (
-        <div className="grid grid-cols-1 w-full mx-auto tablet:grid-cols-2 large-desktop:w-4/5">
+        <div className="w-full grid grid-cols-1 gap-5 items-center md:grid-cols-2">
 
-            {recentArticles.slice(5, 13).map(({ id, title, cover, contenido, publishedAt, slug }) => {
+            {recentArticles.slice(7, 11).map(({ id, title, cover, contenido, publishedAt, slug }) => {
 
                 const formattedDate = new Intl.DateTimeFormat('es-ES', {
                     year: 'numeric',
@@ -21,27 +22,33 @@ export const NewsDown = () => {
 
 
                 return (
-                    <div key={id} className="card m-3">
-                        <div className="flex flex-col tablet:flex-row h-full">
-                            <div className="desktop:w-2/3 large-desktop:w-1/3">
-                                <Link href={`/article/${slug}`} className="no-underline text-inherit">
-                                    <Image src={cover}
-                                        className="object-cover rounded-sm h-48 large-desktop:h-52 w-full"
+                    <div key={id} className="card">
+                        <div className="flex flex-col md:flex-row h-full">
+
+                            <div className="h-48 xl:h-52 xl:w-2/3 2xl:w-2/5">
+                                <Link href={`/article/${slug}`}>
+                                    <Image
+                                        src={getCdnUrl(cover)}
+                                        width={300}
+                                        height={200}
+                                        className="object-cover rounded h-full w-full"
                                         alt={title}
-                                        loading="eager"
+                                        priority={false}
+                                        quality={50}
+                                        loading="lazy"
                                     />
                                 </Link>
                             </div>
 
-                            <div className="w-full large-desktop:w-4/5">
+                            <div className="w-full 2xl:w-4/5 p-5">
                                 <div className="card-body">
-                                    <Link href={`/article/${slug}`} className="no-underline text-inherit">
-                                        <h2 className="truncated-title font-title text-lg large-desktop:text-xl no-underline text-inherit">{title}</h2>
+                                    <Link href={`/article/${slug}`}>
+                                        <h2 className="truncated-title class-title">{title}</h2>
                                     </Link>
-                                    <div className="truncated-text text-gray-600 font-secondary text-sm desktop:text-base large-desktop:text-lg">
+                                    <div className="truncated-text class-content">
                                         <BlocksRenderer content={contenido} />
                                     </div>
-                                    <p className="card-text"><small className="text-date">{formattedDate}</small></p>
+                                    <p className="date">{formattedDate}</p>
                                 </div>
                             </div>
                         </div>

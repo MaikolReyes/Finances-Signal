@@ -14,7 +14,7 @@ export const DarkMode = () => {
                 aria-label="Activar/desactivar modo oscuro"
             />
             <span
-                className={`slider flex items-center justify-center transition-colors duration-300 ${darkMode ? 'bg-white' : 'bg-dark'
+                className={`slider flex items-center justify-center transition-colors duration-300 ${darkMode ? 'bg-white' : 'bg-gray-900'
                     }`}
             >
                 {darkMode ? (

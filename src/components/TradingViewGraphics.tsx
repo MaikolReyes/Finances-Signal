@@ -6,7 +6,7 @@ type TradingViewWidgetProps = {
     symbol: string; // Ejemplo: "NASDAQ:AAPL", "BINANCE:BTCUSDT"
 };
 
-function TradingViewGraphics({ symbol }: TradingViewWidgetProps) {
+export function TradingViewGraphics({ symbol }: TradingViewWidgetProps) {
     const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

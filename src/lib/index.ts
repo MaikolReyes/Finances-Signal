@@ -1,2 +1,5 @@
-export * from './getArticles'
-export * from './strapi'
+export { getArticles } from './getArticles'
+export { getCategories } from './getCategories'
+export { socialLinks } from './socialLinks'
+export { query } from './strapi'
+

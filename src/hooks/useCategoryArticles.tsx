@@ -1,18 +1,20 @@
 import { useContext, useEffect, useMemo } from "react";
 import { ArticlesContext } from "../context/ArticlesContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useRouter, useParams } from "next/navigation";
 
 export const useCategoryArticles = () => {
-
-    const { categoryName } = useParams();
+    const router = useRouter();
+    const params = useParams();
+    const categoryName = useMemo(() => {
+        if (!params?.categoryName) return undefined;
+        const name = Array.isArray(params.categoryName) ? params.categoryName[0] : params.categoryName;
+        return decodeURIComponent(name);
+    }, [params?.categoryName]);
 
     const { articles, language } = useContext(ArticlesContext);
 
-    const navigate = useNavigate();
-
     // Buscar la categoría en el idioma actual
     const translatedCategory = useMemo(() => {
-
         return articles
             .map(article => article.category)
             .find(category => category?.locale === language && category?.name === categoryName);
@@ -21,9 +23,9 @@ export const useCategoryArticles = () => {
     // Actualizar la URL cuando cambia el idioma
     useEffect(() => {
         if (translatedCategory && translatedCategory.name !== categoryName) {
-            navigate(`/category/${translatedCategory.name}`, { replace: true });
+            router.replace(`/category/${translatedCategory.name}`);
         }
-    }, [translatedCategory, categoryName, navigate]);
+    }, [translatedCategory, categoryName, router]);
 
     // Filtrar y ordenar los artículos, memorizando el resultado
     const recentArticles = useMemo(() => {
@@ -38,5 +40,3 @@ export const useCategoryArticles = () => {
 
     return recentArticles;
 };
-
-

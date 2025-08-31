@@ -1,8 +1,8 @@
-export * from './ArticlesContext'
+export { ArticlesContext } from './ArticlesContext'
+export { ArticlesProvider } from './ArticlesProvider'
+export { CategoriesContext } from './CategoriesContext';
+export { CategoriesProvider } from './CategoriesProvider'
+export { DarkModeContext } from './DarkModeContext'
+export { DarkModeProvider } from './DarkModeProvider'
 export * from './InterfaceArticle'
-export * from './ArticlesProvider'
-export * from './DarkModeContext'
-export * from './DarkModeProvider'
-export * from './InterfaceArticle'
-export * from './CategoriesContext'
 

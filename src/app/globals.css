@@ -1,12 +1,59 @@
 @import "tailwindcss";
 
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@theme {
+  /* Usar las variables de next/font con fallbacks */
+  --font-title: var(--font-roboto), Roboto, sans-serif;
+  --font-secondary: var(--font-lato), Lato, sans-serif;
+
+  --color-finance-blue: #0066cc;
+  --color-finance-dark: #1a1a1a;
+
+  --breakpoint-mobile: 480px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1280px;
+  --breakpoint-large-desktop: 1536px;
 }
 
+/* Custom utilities */
+@utility class-title {
+  @apply text-gray-900 font-title text-lg md:text-xl;
+}
+
+@utility class-content {
+  @apply text-gray-600 font-secondary text-sm xl:text-base 2xl:text-lg;
+}
+
+@utility card {
+  @apply border-2 border-gray-300 rounded;
+}
+
+@utility article-down {
+  @apply grid grid-cols-1 w-full mx-auto gap-5 mt-2 md:grid-cols-4 2xl:w-4/5 2xl:mt-3 md:mb-10;
+}
+
+@utility container-section {
+  @apply grid grid-cols-1 w-11/12 gap-5 mx-auto mt-5 md:grid-cols-2 md:p-3 md:mt-0 md:w-full 2xl:w-4/5;
+}
+
+@utility down-left {
+  @apply grid grid-cols-1 mb-10 w-full mx-auto gap-5 md:gap-10 md:grid-cols-4 mt-5;
+}
+
+@utility title-carousel {
+  @apply font-title text-white font-bold text-sm md:text-xl;
+}
+
+@utility content-carousel {
+  @apply font-title text-gray-300 text-sm md:text-lg;
+}
+
+@utility bg-carousel {
+  @apply absolute bottom-0 md:left-[10%] md:right-[10%] p-3 md:p-5 flex flex-col md:bottom-8 items-center text-white text-center bg-black/70 rounded-md md:rounded-lg;
+}
+
+@utility date {
+  @apply mt-1 text-sm text-gray-800 font-title;
+}
 /* Clases de utilidad para texto truncado */
 .truncated-text {
   display: -webkit-box;
@@ -26,56 +73,10 @@
 
 .truncated-text-carousel {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* Widget Ticker */
-.ticker-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
-
-.ticker-wrapper {
-  display: flex;
-  animation: scroll 35s linear infinite; /* Duración uniforme */
-}
-
-.ticker-wrapper:hover {
-  animation-play-state: paused; /* Pausa la animación al hacer hover */
-}
-
-.ticker-item {
-  flex-shrink: 0; /* Evita que los elementos se reduzcan */
-}
-
-@keyframes scroll {
-  from {
-    transform: translateX(100%); /* Empieza fuera del contenedor */
-  }
-  to {
-    transform: translateX(-150%); /* Sale por el otro lado */
-  }
-}
-
-/* Iconos de redes sociales */
-.icon-redes {
-  font-size: 30px;
-  color: #282828;
-  transition: color 0.3s ease;
-}
-
-.icon-redes:hover {
-  color: #6d5efc;
-}
-
-/* Navbar */
-.navbar-nav {
-  align-items: center;
-  gap: 20px;
 }
 
 .collapse {
@@ -107,24 +108,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
   transition: 0.4s;
-  border-radius: 34px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
 }
 
 /* Posición inicial del ícono */
 .slider i {
   font-size: 18px;
   transition: 0.4s;
-}
-
-/* Cuando el checkbox está marcado */
-.toggle-switch input:checked + .slider {
-  background-color: #333;
 }
 
 /* Estilos para dark mode */
@@ -143,7 +137,28 @@ body.dark-mode .truncated-text {
   color: #b0b0b0;
 }
 
-body.dark-mode small {
+body.dark-mode h1 {
+  color: white;
+}
+
+body.dark-mode h2 {
+  color: white;
+}
+
+body.dark-mode h3 {
+  color: white;
+}
+
+body.dark-mode h4 {
+  color: white;
+}
+
+body.dark-mode p {
+  color: white;
+  opacity:0.9
+}
+
+body.dark-mode li {
   color: white;
 }
 
@@ -157,35 +172,4 @@ body.dark-mode .icon-redes {
 
 body.dark-mode .icon-redes:hover {
   color: #6d5efc;
-}
-
-/* Estilos específicos para pantallas pequeñas */
-@media (max-width: 480px) {
-  .collapse {
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .collapse.show {
-    visibility: visible;
-    height: auto;
-  }
-
-  .ticker-wrapper {
-    animation: scroll 25s linear infinite; /* Duración uniforme */
-  }
-
-  .truncated-text-carousel {
-    -webkit-line-clamp: 6;
-  }
-
-  @keyframes scroll {
-    from {
-      transform: translateX(100%); /* Empieza fuera del contenedor */
-    }
-    to {
-      transform: translateX(-700%); /* Sale por el otro lado */
-    }
-  }
 }

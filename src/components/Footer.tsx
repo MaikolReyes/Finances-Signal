@@ -9,20 +9,19 @@ export const Footer = () => {
     return (
 
 
-        <footer className="flex items-center flex-col justify-around large-desktop:p-2 bg-dark min-h-[200px]" >
+        <footer className="flex items-center flex-col justify-around large-desktop:p-2 bg-gray-900 text-white min-h-[200px]" >
 
-            <Link href={'/'}>
+            <Link href={'/'} className="p-5">
                 <Image
                     src={darkLogo}
-                    alt="Logo de la empresa"
-                    className="max-h-8 w-auto"
-                    priority
-                    width={120}
-                    height={32}
+                    width={100}   // tamaño original
+                    height={100}   // tamaño original
+                    className="w-32 h-auto" // Tailwind: ancho fijo, altura automática
+                    alt="Logo"
                 />
             </Link>
 
-            <div className='flex items-center gap-5'>
+            <div className='flex items-center m-5 md:m-2 gap-5'>
                 {
                     socialLinks.map(({ href, label, src }) => (
                         <a key={label} href={href} target='_blank'
@@ -41,13 +40,13 @@ export const Footer = () => {
             </div>
 
 
-            <span className='font-secondary mobile:text-base text-lg text-center text-white'>
+            <span className='font-secondary text-sm md:text-base m-5 md:m-2 text-center text-white'>
                 © 2025 Copyright FinanceSignal
             </span>
 
-            <div className='flex items-center gap-5'>
+            <div className='flex flex-col p-5 text-sm items-center gap-3 md:flex-row md:gap-5 md:text-base'>
 
-                <Link href="/sobre-nosotros" className="text-blue-400 hover:underline">
+                <Link href="/sobre-nosotros" className=" text-blue-400 hover:underline">
                     Sobre Nosotros
                 </Link>
 

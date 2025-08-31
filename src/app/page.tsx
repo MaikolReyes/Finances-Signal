@@ -4,12 +4,12 @@ import { CarouselSlider, NewsDown, NewsDownLeft, Sidebar } from "../home";
 export default function LatestNews() {
   return (
     <>
-      <div className="grid grid-cols-1 p-3 gap-3 w-full mx-auto items-start tablet:grid-cols-2 large-desktop:w-4/5 large-desktop:gap-5">
+      <div className="container-section">
         <CarouselSlider />
         <Sidebar />
       </div>
 
-      <div>
+      <div className="w-11/12 mt-5 md:mt-0 md:w-full md:p-3 2xl:w-4/5 mx-auto">
         <NewsDown />
         <NewsDownLeft />
       </div>

@@ -1,16 +1,35 @@
 // app/layout.tsx
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { DarkModeProvider } from "@/context/DarkModeProvider";
-import { CategoriesProvider } from "@/context/CategoriesProvider";
-import { ArticlesProvider } from "@/context/ArticlesProvider";
-import { GoogleAnalytics } from "@/components/GoogleAnalitycs";
+import { DarkModeProvider, ArticlesProvider, CategoriesProvider } from "@/context";
+import { GoogleAnalytics, Navbar, CookieConsent, Footer } from "@/components";
+import { Lato, Roboto } from 'next/font/google';
 import Script from "next/script";
 import "./globals.css";
 
+// Configuración optimizada de fuentes
+const lato = Lato({
+  weight: ['100', '300', '400', '700', '900'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lato',
+  preload: true,
+});
 
+const roboto = Roboto({
+  weight: ['100', '300', '400', '500', '700', '900'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
+  preload: true,
+});
+
+// app/layout.tsx - Cambia tu metadata por esto:
 export const metadata = {
-  title: "FinanceSignal",
+  title: {
+    template: '%s | FinanceSignal',
+    default: 'FinanceSignal | Ultimas Noticias',
+  },
   description: "Mantente informado con las últimas noticias de finanzas y economía. Descubre análisis de mercado, tendencias económicas y consejos financieros en un solo lugar. ¡Tu fuente confiable para tomar decisiones inteligentes!",
   icons: {
     icon: "/favicon.ico",
@@ -19,54 +38,49 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
+    <html lang="es" className={`${lato.variable} ${roboto.variable}`}>
       <head>
-        {/* Pre-conexiones para optimizar la carga de recursos */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        {/* Fuentes externas */}
+        {/* 🔥 CRÍTICO: Preload para imagen LCP */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:wght@400;500&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          as="image"
+          href="https://d1gbtbhodg3cj1.cloudfront.net"
+          fetchPriority="high"
         />
 
-        {/* Bootstrap CSS */}
+        {/* Preload de fuentes críticas */}
         <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          rel="preload"
+          href="/fonts/lato-400.woff2" // Ajusta según tu setup
+          as="font"
+          type="font/woff2"
           crossOrigin="anonymous"
         />
 
-        {/* Google AdSense */}
+        {/* DNS prefetch para mejorar conexiones */}
+        <link rel="dns-prefetch" href="//d1gbtbhodg3cj1.cloudfront.net" />
+        <link rel="preconnect" href="https://d1gbtbhodg3cj1.cloudfront.net" crossOrigin="" />
+
+        {/* AdSense - Movido a afterInteractive */}
         <meta name="google-adsense-account" content="ca-pub-8500553745947588" />
+
       </head>
 
-      <body>
-        {/* Google Analytics */}
+      <body className="antialiased">
         <GoogleAnalytics />
 
-        {/* FontAwesome */}
+        {/* Scripts no críticos después del contenido */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8500553745947588"
+          crossOrigin="anonymous"
+          strategy="afterInteractive" // 🔥 Cambio crítico
+        />
+
         <Script
           src="https://kit.fontawesome.com/120dea019e.js"
           crossOrigin="anonymous"
-          strategy="lazyOnload"
-        />
-
-        {/* AdSense Script */}
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8500553745947588"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
-        />
-
-        {/* Bootstrap JS */}
-        <Script
-          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-          crossOrigin="anonymous"
-          strategy="lazyOnload"
+          strategy="lazyOnload" // ✅ Correcto
         />
 
         <DarkModeProvider>
@@ -74,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ArticlesProvider>
               <Navbar />
               {children}
+              <CookieConsent />
               <Footer />
             </ArticlesProvider>
           </CategoriesProvider>

@@ -1,76 +1,85 @@
-"use client"
-
-import Link from "next/link";
-import Image from "next/image";
-import { useRecentArticles } from "../hooks/useRecenArticles";
+"use client";
+//
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { useRecentArticles } from "../hooks/useRecenArticles";
+import { getCdnUrl } from "@/utils/getCdnUrl";
+import Image from "next/image";
+import Link from "next/link";
 
 export const Sidebar = () => {
-
     const recentArticles = useRecentArticles();
 
+    if (!recentArticles || recentArticles.length === 0) return null;
+
     return (
-
-        <div className="w-full h-full grid grid-cols-1 justify-start gap-3 tablet:grid-cols-2">
-
-            {recentArticles.slice(1, 3).map(({ title, cover, id, publishedAt, slug, contenido }) => {
-
-                const formattedDate = new Intl.DateTimeFormat('es-ES', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit'
+        <div className="w-full h-full grid grid-cols-1 gap-5 md:gap-3 md:grid-cols-2">
+            {/* Primera sección: imágenes + contenido */}
+            {recentArticles.slice(3, 5).map(({ title, cover, id, publishedAt, slug, contenido }) => {
+                const formattedDate = new Intl.DateTimeFormat("es-ES", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
                 }).format(new Date(publishedAt));
 
                 return (
+                    <div key={id} className="card">
 
-                    <div className="card" key={id}>
-                        <Link href={`/article/${slug}`} className="w-full no-underline text-inherit">
-                            <Image
-                                src={cover}
-                                className="object-cover h-40 large-desktop:h-48 w-full rounded-start"
-                                alt={title}
-                                priority
-                                width={400}
-                                height={160}
-                            />
-                        </Link>
-                        <div className="card-body">
-                            <h2 className="truncated-title font-title text-base large-desktop:text-xl">
-                                {title}
-                            </h2>
-                            <div className="truncated-text text-gray-600 font-secondary text-sm desktop:text-base large-desktop:text-lg">
-                                <BlocksRenderer content={contenido} />
-                            </div>
-                            <p className="card-text"><small className="text-date">{formattedDate}</small></p>
-                        </div>
-
-                    </div>
-                )
-            })
-            }
-
-            {recentArticles.slice(3, 5).map(({ title, id, publishedAt, slug }) => {
-
-                const formattedDate = new Intl.DateTimeFormat('es-ES', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit'
-                }).format(new Date(publishedAt));
-
-                return (
-
-                    <div className="card" key={id}>
                         <Link href={`/article/${slug}`}>
-                            <div className="card-body">
-                                <h2 className="truncated-title font-title text-base large-desktop:text-xl">
+                            <div className="relative w-full h-48">
+                                <Image
+                                    src={getCdnUrl(cover)}
+                                    alt={title}
+                                    className="object-cover w-full h-full"
+                                    width={400}
+                                    height={200}
+                                    priority={true}
+                                    quality={50}
+                                />
+                            </div>
+                        </Link>
+                        <div className="p-3">
+                            <Link href={`/article/${slug}`}>
+                                <h2 className="truncated-title class-title">
                                     {title}
                                 </h2>
-                                <p className="card-text"><small className="text-date">{formattedDate}</small></p>
+                            </Link>
+                            <div className="truncated-text class-content">
+                                <BlocksRenderer content={contenido} />
                             </div>
-                        </Link>
+                            <p className="date">
+                                {formattedDate}
+                            </p>
+                        </div>
                     </div>
-                )
+                );
             })}
-        </div>
-    )
-}
+
+            {/* Segunda sección: solo título + fecha */}
+            {
+                recentArticles.slice(5, 7).map(({ title, id, publishedAt, slug }) => {
+                    const formattedDate = new Intl.DateTimeFormat("es-ES", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                    }).format(new Date(publishedAt));
+
+                    return (
+                        <div key={id} className="card p-3">
+                            <Link
+                                href={`/article/${slug}`}
+                                aria-label={`Leer artículo: ${title}`}>
+                                <h2 className="truncated-title class-title">
+                                    {title}
+                                </h2>
+                                <p className="date">
+                                    {formattedDate}
+                                </p>
+                                <span className="sr-only">Leer artículo completo</span>
+                            </Link>
+                        </div>
+                    );
+                })
+            }
+        </div >
+    );
+};

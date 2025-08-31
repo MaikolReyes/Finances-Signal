@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useRecentArticles } from '../hooks/useRecenArticles';
 
 export const SideNews = () => {
@@ -6,7 +6,7 @@ export const SideNews = () => {
 
     return (
         <div>
-            {recentArticles.slice(3, 5).map(({ title, id, publishedAt,slug }) => {
+            {recentArticles.slice(3, 5).map(({ title, id, publishedAt, slug }) => {
 
                 const formattedDate = new Intl.DateTimeFormat('es-ES', {
                     year: 'numeric',
@@ -17,7 +17,7 @@ export const SideNews = () => {
                 return (
 
                     <div key={id} className='w-2/3'>
-                        <Link to={`/article/${slug}`} className="w-full no-underline text-inherit">
+                        <Link href={`/article/${slug}`} className="w-full no-underline text-inherit">
                             <div className="card w-full">
                                 <div className="card-body">
                                     <h5 className="truncated-title font-title text-base large-desktop:text-xl">

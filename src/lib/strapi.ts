@@ -1,6 +1,6 @@
 // lib/api.ts
 const STRAPI_HOST = process.env.NEXT_PUBLIC_STRAPI_HOST;
-const STRAPI_TOKEN = process.env.STRAPI_TOKEN; // Cambiado: sin NEXT_PUBLIC_
+const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_TOKEN; // Cambiado: sin NEXT_PUBLIC_
 
 export async function query(url: string) {
     // Verificar que las variables estén definidas
@@ -13,7 +13,6 @@ export async function query(url: string) {
     }
 
     const fullUrl = `${STRAPI_HOST}/api/${url}`;
-    console.log('Fetching from:', fullUrl); // Debug
 
     
     try {
@@ -40,7 +39,6 @@ export async function query(url: string) {
         }
 
         const result = await response.json();
-        console.log('API Response:', result); // Debug
 
         // Verificar estructura de respuesta de Strapi
         if (result.data) {
@@ -59,15 +57,15 @@ export async function query(url: string) {
 }
 
 // Funciones específicas para endpoints
-export async function getArticles(locale = 'es', limit = 100, start = 0) {
-    const endpoint = `articles?locale=${locale}&pagination[limit]=${limit}&pagination[start]=${start}&populate[imagen]=true&populate[category]=true&populate[localizations]=true&populate[author]=true`;
-    return query(endpoint);
-}
+// export async function getArticles(locale = 'es', limit = 100, start = 0) {
+//     const endpoint = `articles?locale=${locale}&pagination[limit]=${limit}&pagination[start]=${start}&populate[imagen]=true&populate[category]=true&populate[localizations]=true&populate[author]=true`;
+//     return query(endpoint);
+// }
 
-export async function getCategories(limit = 100) {
-    const endpoint = `categories?populate=localizations&pagination[limit]=${limit}`;
-    return query(endpoint);
-}
+// export async function getCategories(limit = 100) {
+//     const endpoint = `categories?populate=localizations&pagination[limit]=${limit}`;
+//     return query(endpoint);
+// }
 
 // Versión para usar solo en el cliente (sin token)
 export async function queryClient(url: string) {

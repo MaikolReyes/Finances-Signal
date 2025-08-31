@@ -1,32 +1,40 @@
+"use client"
 // TradingViewWidget.jsx
 import { useEffect, useRef, memo, useContext } from 'react';
 import { DarkModeContext } from '../context';
 
-function TradingViewWidget() {
+export function TradingViewWidget() {
     const { darkMode } = useContext(DarkModeContext);
     const container = useRef<HTMLDivElement>(null);
-    const scriptLoaded = useRef(false);
+    const widgetInitialized = useRef(false);
 
     useEffect(() => {
         if (!container.current) return;
 
         const currentContainer = container.current;
 
+        // Prevenir múltiples inicializaciones
+        if (widgetInitialized.current) return;
+
         // Limpiar cualquier contenido previo
         currentContainer.innerHTML = '';
-        scriptLoaded.current = false;
 
-        // Crear un ID único para este widget
-        const widgetId = `tradingview_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        // Crear un ID único más simple y confiable
+        const widgetId = `tradingview-widget-${Date.now()}`;
 
-        // Crear la estructura HTML directamente
-        currentContainer.innerHTML = `
-            <div class="tradingview-widget-container" style="height:100%;width:100%">
-                <div class="tradingview-widget-container__widget" id="${widgetId}"></div>
-            </div>
-        `;
+        // Crear la estructura HTML de manera más robusta
+        const widgetContainer = document.createElement('div');
+        widgetContainer.className = 'tradingview-widget-container';
+        widgetContainer.style.cssText = 'height:100%;width:100%';
 
-        // Crear la configuración
+        const widgetInner = document.createElement('div');
+        widgetInner.className = 'tradingview-widget-container__widget';
+        widgetInner.id = widgetId;
+
+        widgetContainer.appendChild(widgetInner);
+        currentContainer.appendChild(widgetContainer);
+
+        // Configuración del widget
         const widgetConfig = {
             "symbols": [
                 { "description": "Apple", "proName": "NASDAQ:AAPL" },
@@ -53,75 +61,107 @@ function TradingViewWidget() {
             "container_id": widgetId
         };
 
-        // Función para cargar el script de manera más segura
+        // Función para inicializar el widget con verificaciones más robustas
         const initializeWidget = () => {
-            if (scriptLoaded.current || !currentContainer) return;
-
             try {
-                // Verificar que el contenedor del widget exista
-                const widgetElement = currentContainer.querySelector(`#${widgetId}`);
-                if (!widgetElement) {
-                    console.warn('Widget container not found');
+                // Verificar que todos los elementos existan
+                if (!currentContainer || !currentContainer.isConnected) {
+                    console.warn('Container not available or not connected to DOM');
                     return;
                 }
 
-                // Limpiar cualquier script anterior
-                const existingScripts = currentContainer.querySelectorAll('script[src*="tradingview"]');
-                existingScripts.forEach(script => script.remove());
+                const targetElement = document.getElementById(widgetId);
+                if (!targetElement) {
+                    console.warn('Target element not found:', widgetId);
+                    return;
+                }
+
+                // Verificar que no haya ya un script cargándose
+                const existingScript = currentContainer.querySelector('script[src*="ticker-tape"]');
+                if (existingScript) {
+                    console.log('Script already exists, skipping initialization');
+                    return;
+                }
 
                 // Crear el script
                 const script = document.createElement('script');
                 script.type = 'text/javascript';
                 script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
                 script.async = true;
-                script.innerHTML = JSON.stringify(widgetConfig);
 
-                // Añadir event listeners para debugging
+                // Event listeners para monitoreo
                 script.onload = () => {
-                    scriptLoaded.current = true;
+                    widgetInitialized.current = true;
                 };
 
                 script.onerror = (error) => {
                     console.error('Error loading TradingView script:', error);
+                    widgetInitialized.current = false;
                 };
 
-                // Insertar el script en el contenedor del widget
-                const widgetContainer = currentContainer.querySelector('.tradingview-widget-container');
-                if (widgetContainer) {
-                    widgetContainer.appendChild(script);
-                }
+                // Agregar la configuración como contenido del script
+                script.textContent = JSON.stringify(widgetConfig);
+
+                // Agregar el script al final del contenedor principal
+                widgetContainer.appendChild(script);
+
 
             } catch (error) {
-                console.error('Error initializing TradingView widget:', error);
+                console.error('Error during widget initialization:', error);
+                widgetInitialized.current = false;
             }
         };
 
-        // Usar múltiples estrategias de timing para mayor robustez
-        const timeouts: NodeJS.Timeout[] = [];
-
-        // Primera tentativa inmediata
-        timeouts.push(setTimeout(initializeWidget, 0));
-
-        // Segunda tentativa con un pequeño delay
-        timeouts.push(setTimeout(initializeWidget, 100));
-
-        // Tercera tentativa con más delay por si acaso
-        timeouts.push(setTimeout(initializeWidget, 500));
+        // Esperar a que el DOM esté completamente listo
+        const initTimer = setTimeout(() => {
+            if (document.readyState === 'complete') {
+                initializeWidget();
+            } else {
+                window.addEventListener('load', initializeWidget, { once: true });
+            }
+        }, 100);
 
         // Cleanup function
         return () => {
-            timeouts.forEach(timeout => clearTimeout(timeout));
-            scriptLoaded.current = false;
+            clearTimeout(initTimer);
+            widgetInitialized.current = false;
 
             if (currentContainer) {
-                // Limpiar iframes y scripts
+                // Cleanup más agresivo
                 const iframes = currentContainer.querySelectorAll('iframe');
                 const scripts = currentContainer.querySelectorAll('script');
+                const widgets = currentContainer.querySelectorAll('[id*="tradingview"]');
 
-                iframes.forEach(iframe => iframe.remove());
-                scripts.forEach(script => script.remove());
+                iframes.forEach(iframe => {
+                    try {
+                        iframe.remove();
+                    } catch (e) {
+                        console.warn('Error removing iframe:', e);
+                    }
+                });
 
-                currentContainer.innerHTML = '';
+                scripts.forEach(script => {
+                    try {
+                        script.remove();
+                    } catch (e) {
+                        console.warn('Error removing script:', e);
+                    }
+                });
+
+                widgets.forEach(widget => {
+                    try {
+                        widget.remove();
+                    } catch (e) {
+                        console.warn('Error removing widget:', e);
+                    }
+                });
+
+                // Limpiar el contenedor
+                try {
+                    currentContainer.innerHTML = '';
+                } catch (e) {
+                    console.warn('Error clearing container:', e);
+                }
             }
         };
 
@@ -129,12 +169,13 @@ function TradingViewWidget() {
 
     return (
         <div
-            className="border-2"
+            className="border-2 border-gray-300"
             ref={container}
             style={{
                 width: '100%',
                 minHeight: '62px',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                position: 'relative'
             }}
         />
     );
