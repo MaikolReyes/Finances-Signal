@@ -5,6 +5,15 @@ import { useState, useEffect, useCallback } from "react";
 // No redeclaramos Window para evitar conflictos
 // Usamos los tipos existentes de gtag si están disponibles
 
+declare global {
+    interface Window {
+        gtag: (...args: unknown[]) => void;
+        dataLayer: unknown[];
+        resetCookies?: () => void;
+        simulateRenewal?: () => void;
+    }
+}
+
 const GTAG_ID = 'G-8JPR1MN0EH';
 const CONVERSION_ID = 'AW-16848723907';
 const CONVERSION_LABEL = 'AW-16848723907/pJvXCO7b15saEMO_jOI-';
