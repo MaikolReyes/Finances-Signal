@@ -51,8 +51,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
 
       <body className="antialiased">
+
         <GoogleAnalytics />
 
+        {/* AdSense script */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8500553745947588"
           strategy="afterInteractive"
