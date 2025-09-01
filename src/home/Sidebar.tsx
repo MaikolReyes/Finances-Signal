@@ -2,7 +2,7 @@
 //
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useRecentArticles } from "../hooks/useRecenArticles";
-import { getCdnUrl } from "@/utils/getCdnUrl";
+// import { getCdnUrl } from "@/utils/getCdnUrl";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,13 +27,13 @@ export const Sidebar = () => {
                         <Link href={`/article/${slug}`}>
                             <div className="relative w-full h-48">
                                 <Image
-                                    src={getCdnUrl(cover)}
+                                    src={cover}
                                     alt={title}
                                     className="object-cover w-full h-full"
                                     width={400}
                                     height={200}
                                     priority={true}
-                                    quality={50}
+                                    quality={75}
                                 />
                             </div>
                         </Link>

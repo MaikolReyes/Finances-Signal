@@ -65,7 +65,7 @@ export default function Article() {
 
                 {imagen && (
                     <Image
-                        src={getCdnUrl(imagen)}
+                        src={imagen}
                         className="rounded-xl shadow-lg w-full mx-auto"
                         width={1200}
                         height={500}
@@ -80,12 +80,12 @@ export default function Article() {
                     <h2 className="font-secondary font-bold text-base">Fecha de publicación: {formattedDate}</h2>
                 </div>
 
-                <div className={`bg-gray-100 rounded p-3 border border-gray-300 shadow-md ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-900'}`}>
+                <div className={`bg-gray-100 rounded p-5 border border-gray-300 shadow-md ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-900'}`}>
                     <BlocksRenderer content={contentResumen}
                         blocks={{
-                            paragraph: ({ children }) => <p className="font-title text-lg md:text-xl">{children}</p>,
-                            list: ({ children }) => <ul className="list-disc pl-6 text-lg md:text-xl">{children}</ul>,
-                            'list-item': ({ children }) => <li className='font-title text-lg md:text-xl'>{children}</li>
+                            paragraph: ({ children }) => <p className="font-title text-base md:text-lg">{children}</p>,
+                            list: ({ children }) => <ul className="list-disc pl-6 text-base md:text-lg">{children}</ul>,
+                            'list-item': ({ children }) => <li className='font-title text-base md:text-lg'>{children}</li>
                         }}
                     />
                 </div>
@@ -94,7 +94,7 @@ export default function Article() {
                     <BlocksRenderer content={content}
                         blocks={{
                             paragraph: ({ children }) => (
-                                <p className="font-secondary text-gray-900 text-lg md:text-xl">{children}</p>),
+                                <p className="font-secondary text-gray-900 text-base md:text-lg">{children}</p>),
                             heading: ({ children, level }) => {
                                 const sizeMap: Record<number, string> = {
                                     1: 'text-5xl', 2: 'text-4xl', 3: 'text-3xl', 4: 'text-2xl', 5: 'text-xl', 6: 'text-lg',
@@ -139,7 +139,7 @@ export default function Article() {
                                     <Link
                                         href={safeUrl}
                                         aria-label={label.trim() || "Enlace"}
-                                        className="text-blue-500 hover:underline font-bold text-lg md:text-xl"
+                                        className="text-blue-500 hover:underline font-bold text-base md:text-lg"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
@@ -149,12 +149,12 @@ export default function Article() {
                                 );
                             },
                             quote: ({ children }) => (
-                                <blockquote className={`font-secondary text-lg md:text-xl border-l-4 border-blue-500 pl-4 italic font-bold my-4 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+                                <blockquote className={`font-secondary text-base md:text-lg border-l-4 border-blue-500 pl-4 italic font-bold my-4 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
                                     {children}
                                 </blockquote>
                             ),
                             list: ({ children }) => <ul className="list-disc pl-6">{children}</ul>,
-                            'list-item': ({ children }) => <li className='font-secondary text-gray-900 text-lg md:text-xl'>{children}</li>
+                            'list-item': ({ children }) => <li className='font-secondary text-gray-900 text-base md:text-lg'>{children}</li>
                         }}
                     />
                     {/* <Tradingview symbol="NASDAQ:AAPL" /> */}

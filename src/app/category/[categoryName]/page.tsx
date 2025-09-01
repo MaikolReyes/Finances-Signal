@@ -2,7 +2,6 @@
 //
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useCategoryArticles } from "../../../hooks/useCategoryArticles";
-import { getCdnUrl } from "../../../utils/getCdnUrl";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -45,11 +44,11 @@ export default function CategoryContent() {
                                     <Link href={`/article/${slug}`} className="no-underline text-inherit">
 
                                         {cover && (
-                                            <Image src={getCdnUrl(cover)}
-                                                width={200}
-                                                height={200}
-                                                priority={false}
-                                                quality={50}
+                                            <Image src={cover}
+                                                width={300}
+                                                height={300}
+                                                priority={true}
+                                                quality={75}
                                                 className="object-cover rounded w-full h-48"
                                                 alt={title} />
                                         )}
@@ -92,11 +91,11 @@ export default function CategoryContent() {
                                 <div className="card w-full">
                                     <Link href={`/article/${slug}`} className="no-underline text-inherit">
                                         {cover && (
-                                            <Image src={getCdnUrl(cover)}
+                                            <Image src={cover}
                                                 width={300}
                                                 height={300}
-                                                priority={false}
-                                                quality={50}
+                                                priority={true}
+                                                quality={75}
                                                 className="object-cover rounded-sm w-full h-48"
                                                 alt={title} />
                                         )}

@@ -2,7 +2,7 @@
 //
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useRecentArticles } from "../hooks/useRecenArticles";
-import { getCdnUrl } from "../utils/getCdnUrl";
+// import { getCdnUrl } from "../utils/getCdnUrl";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,13 +50,13 @@ export const CarouselSlider = () => {
                             className="block h-full w-full relative"
                         >
                             <Image
-                                src={getCdnUrl(cover)}
+                                src={cover}
                                 alt={title}
                                 fill
                                 priority={true}
                                 className="object-cover w-full h-full"
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                quality={50}
+                                quality={75}
                             />
                         </Link>
                         <div className="bg-carousel text-white">
