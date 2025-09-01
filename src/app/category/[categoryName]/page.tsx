@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 import { useParams } from "next/navigation";
+import { getCdnUrl } from "@/utils/getCdnUrl";
 
 export default function CategoryContent() {
 
@@ -44,7 +45,8 @@ export default function CategoryContent() {
                                     <Link href={`/article/${slug}`} className="no-underline text-inherit">
 
                                         {cover && (
-                                            <Image src={cover}
+                                            <Image
+                                                src={getCdnUrl(cover)}
                                                 width={300}
                                                 height={300}
                                                 priority={true}
@@ -91,7 +93,8 @@ export default function CategoryContent() {
                                 <div className="card w-full">
                                     <Link href={`/article/${slug}`} className="no-underline text-inherit">
                                         {cover && (
-                                            <Image src={cover}
+                                            <Image
+                                                src={getCdnUrl(cover)}
                                                 width={300}
                                                 height={300}
                                                 priority={true}

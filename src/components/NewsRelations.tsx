@@ -2,7 +2,7 @@
 //
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { useRecentArticles } from '../hooks/useRecenArticles';
-// import { getCdnUrl } from "@/utils/getCdnUrl";
+import { getCdnUrl } from "@/utils/getCdnUrl";
 import Link from 'next/link';
 import Image from 'next/image';
 import { DarkModeContext } from '@/context';
@@ -27,7 +27,8 @@ export const NewsRelations = () => {
                         <div key={id} className={`my-2 md:my-6  ${darkMode ? 'border-white' : 'border-gray-800'}`} >
                             <div className="card">
                                 <Link href={`/article/${slug}`} className="no-underline text-inherit">
-                                    <Image src={cover}
+                                    <Image
+                                        src={getCdnUrl(cover)}
                                         className="object-cover rounded-sm w-full aspect-[16/9]"
                                         alt={title}
                                         width={300}

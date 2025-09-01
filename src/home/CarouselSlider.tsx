@@ -6,6 +6,7 @@ import { useRecentArticles } from "../hooks/useRecenArticles";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getCdnUrl } from "@/utils/getCdnUrl";
 
 export const CarouselSlider = () => {
     const recentArticles = useRecentArticles().slice(0, 3); // 👈 solo 3 artículos
@@ -50,7 +51,7 @@ export const CarouselSlider = () => {
                             className="block h-full w-full relative"
                         >
                             <Image
-                                src={cover}
+                                src={getCdnUrl(cover)}
                                 alt={title}
                                 fill
                                 priority={true}

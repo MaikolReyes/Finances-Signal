@@ -2,9 +2,9 @@
 //
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { useRecentArticles } from "../hooks/useRecenArticles";
-// import { getCdnUrl } from "@/utils/getCdnUrl";
 import Image from "next/image";
 import Link from "next/link";
+import { getCdnUrl } from "@/utils/getCdnUrl";
 
 export const NewsDownLeft = () => {
 
@@ -27,7 +27,7 @@ export const NewsDownLeft = () => {
                         <div className="w-full">
                             <Link href={`/article/${slug}`} >
                                 <Image
-                                    src={cover}
+                                    src={getCdnUrl(cover)}
                                     className="object-cover rounded-sm w-full aspect-[16/9]"
                                     alt={title}
                                     width={300}

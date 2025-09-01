@@ -5,6 +5,7 @@ import { useRecentArticles } from "../hooks/useRecenArticles";
 // import { getCdnUrl } from "@/utils/getCdnUrl";
 import Image from "next/image";
 import Link from "next/link";
+import { getCdnUrl } from "@/utils/getCdnUrl";
 
 export const Sidebar = () => {
     const recentArticles = useRecentArticles();
@@ -27,7 +28,7 @@ export const Sidebar = () => {
                         <Link href={`/article/${slug}`}>
                             <div className="relative w-full h-48">
                                 <Image
-                                    src={cover}
+                                    src={getCdnUrl(cover)}
                                     alt={title}
                                     className="object-cover w-full h-full"
                                     width={400}

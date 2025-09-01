@@ -65,7 +65,7 @@ export default function Article() {
 
                 {imagen && (
                     <Image
-                        src={imagen}
+                        src={getCdnUrl(imagen)}
                         className="rounded-xl shadow-lg w-full mx-auto"
                         width={1200}
                         height={500}
