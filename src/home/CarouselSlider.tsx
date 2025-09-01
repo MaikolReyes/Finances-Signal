@@ -67,7 +67,32 @@ export const CarouselSlider = () => {
                                 </h2>
                             </Link>
                             <div className="truncated-text-carousel content-carousel">
-                                <BlocksRenderer content={contenido} />
+                                <BlocksRenderer content={contenido} blocks={{
+                                    link: ({ children, url }) => {
+                                        // Asegurarte de que url es una URL válida
+                                        const safeUrl = url.startsWith("http") ? url : "#";
+
+                                        const label =
+                                            typeof children === "string"
+                                                ? children
+                                                : Array.isArray(children)
+                                                    ? children.map(child => (typeof child === "string" ? child : "")).join(" ")
+                                                    : "Enlace";
+
+                                        return (
+                                            <Link
+                                                href={safeUrl}
+                                                aria-label={label.trim() || "Enlace"}
+                                                className="text-blue-500 hover:underline font-bold text-base md:text-lg"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {children || <span className="sr-only">{label}</span>}
+                                                <span className="sr-only">Leer artículo completo</span>
+                                            </Link>
+                                        );
+                                    },
+                                }} />
                             </div>
                         </div>
                     </div>
