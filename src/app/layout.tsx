@@ -55,11 +55,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GoogleAnalytics />
 
         {/* AdSense script */}
-        <Script
+        {/* <Script
+          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8500553745947588"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
-        />
+        /> */}
 
         <Script
           src="https://kit.fontawesome.com/120dea019e.js"

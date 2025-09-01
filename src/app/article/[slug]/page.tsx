@@ -70,7 +70,7 @@ export default function Article() {
                         width={1200}
                         height={500}
                         alt={title}
-                        priority={true}
+                        priority
                         quality={75}
                     />
                 )}

@@ -212,15 +212,12 @@ export const CookieConsent = () => {
 
     // Función para aceptar cookies
     const acceptCookies = useCallback(async (): Promise<void> => {
-        console.log('🍪 Accepting cookies...');
         setIsLoading(true);
         setCookie(COOKIE_NAME, "accepted", COOKIE_DURATION_DAYS);
         setShowBanner(false);
 
         try {
             await loadThirdPartyScripts();
-            console.log('✅ Third-party scripts loaded successfully');
-            console.log('📊 DataLayer:', window.dataLayer);
         } catch (error) {
             console.error('❌ Error loading third-party scripts:', error);
         } finally {
@@ -241,7 +238,6 @@ export const CookieConsent = () => {
             // Necesita renovación - mostrar banner con mensaje diferente
             setIsRenewal(true);
             setShowBanner(true);
-            console.log('🔄 Cookie consent needs renewal after 24 hours');
         } else if (consentStatus === "accepted") {
             // Todo OK - cargar scripts
             loadThirdPartyScripts().catch(console.error);
