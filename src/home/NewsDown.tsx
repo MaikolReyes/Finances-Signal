@@ -35,7 +35,6 @@ export const NewsDown = () => {
                                         alt={title}
                                         priority={false}
                                         quality={50}
-                                        loading="lazy"
                                     />
                                 </Link>
                             </div>

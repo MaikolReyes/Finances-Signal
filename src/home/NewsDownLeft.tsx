@@ -34,7 +34,6 @@ export const NewsDownLeft = () => {
                                     height={300}
                                     priority={false}
                                     quality={50}
-                                    loading="lazy"
                                 />
                             </Link >
                             <div className="p-3">
