@@ -40,22 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es" className={`${lato.variable} ${roboto.variable}`}>
       <head>
-        {/* 🔥 CRÍTICO: Preload para imagen LCP */}
-        <link
-          rel="preload"
-          as="image"
-          href="https://d1gbtbhodg3cj1.cloudfront.net"
-          fetchPriority="high"
-        />
-
-        {/* Preload de fuentes críticas */}
-        <link
-          rel="preload"
-          href="/fonts/lato-400.woff2" // Ajusta según tu setup
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
 
         {/* DNS prefetch para mejorar conexiones */}
         <link rel="dns-prefetch" href="//d1gbtbhodg3cj1.cloudfront.net" />
