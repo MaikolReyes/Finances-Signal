@@ -58,6 +58,7 @@ export const CarouselSlider = () => {
                                 className="object-cover w-full h-full"
                                 sizes="(max-width: 768px) 100vw, 50vw"
                                 quality={75}
+                                fetchPriority="high"
                             />
                         </Link>
                         <div className="bg-carousel text-white">
