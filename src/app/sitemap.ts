@@ -1,14 +1,39 @@
 // app/sitemap.ts
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+    const baseUrl = "https://www.financessignal.com";
+
     return [
         {
-            url: 'https://www.financessignal.com',
-            lastModified: new Date('2025-02-23T18:03:59+00:00'),
-            changeFrequency: 'weekly',
+            url: baseUrl,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
             priority: 1,
         },
-        // Agrega más URLs de tu sitio aquí
-    ]
+        {
+            url: `${baseUrl}/category/Finanzas`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/category/Tecnología`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/category/Criptomonedas`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.7,
+        },
+        {
+            url: `${baseUrl}/category/Economía`,
+            lastModified: new Date(),
+            changeFrequency: "weekly",
+            priority: 0.7,
+        },
+    ];
 }
