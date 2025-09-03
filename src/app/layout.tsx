@@ -2,6 +2,8 @@
 import { DarkModeProvider, ArticlesProvider, CategoriesProvider } from "@/context";
 import { GoogleAnalytics, Navbar, CookieConsent, Footer } from "@/components";
 import { Lato, Roboto } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from "next/script";
 import "./globals.css";
 
@@ -73,6 +75,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ArticlesProvider>
               <Navbar />
               {children}
+              <Analytics />
+              <SpeedInsights />
               <CookieConsent />
               <Footer />
             </ArticlesProvider>
