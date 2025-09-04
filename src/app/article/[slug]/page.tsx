@@ -67,7 +67,7 @@ export default function Article() {
                 <meta property="og:site_name" content="FinanceSignal" />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
-                <meta property="og:image" content={imagen} />
+                <meta property="og:image" content={getCdnUrl(imagen)} />
                 <meta property="og:image:width" content="1200" />
                 <meta property="og:image:height" content="630" />
                 <meta property="og:image:alt" content={`Imagen del artículo: ${title}`} />
@@ -78,7 +78,7 @@ export default function Article() {
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={description} />
-                <meta name="twitter:image" content={imagen} />
+                <meta name="twitter:image" content={getCdnUrl(imagen)} />
                 <meta name="twitter:image:alt" content={`Imagen del artículo: ${title}`} />
             </Head>
 
