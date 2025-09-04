@@ -20,6 +20,7 @@ export default function Article() {
     const currentArticles = useArticlesLanguage();
 
     const { publishedAt } = currentArticles || {};
+
     const formattedDate = publishedAt
         ? new Intl.DateTimeFormat('es-ES', {
             year: 'numeric',
@@ -27,7 +28,6 @@ export default function Article() {
             day: '2-digit',
         }).format(new Date(publishedAt))
         : 'Fecha no disponible';
-
 
 
     // Article content and metadata
@@ -51,8 +51,6 @@ export default function Article() {
             document.title = title;
         }
     }, [title]);
-
-
 
     return (
 
@@ -82,9 +80,9 @@ export default function Article() {
                 <meta name="twitter:image:alt" content={`Imagen del artículo: ${title}`} />
             </Head>
 
-            <div className=' grid grid-cols-1 md:grid-cols-3 mx-auto p-3 md:p-2 mt-2 gap-5'>
+            <div className='grid grid-cols-1 md:grid-cols-3 mx-auto p-3 md:p-2 mt-2 gap-5'>
 
-                <div key={id} className="flex flex-col col-span-2 justify-center w-full ml-auto md:w-2/4 2xl:w-3/5">
+                <div key={id} className="flex flex-col col-span-2 justify-center w-full ml-auto md:w-4/5 2xl:w-3/5">
 
                     <h1 className="text-xl font-secondary font-bold text-gray-800 md:text-3xl">{title}</h1>
                     <div className={`flex gap-3 p-1 border-t-2 my-1 ${darkMode ? 'border-white' : 'border-gray-300'}`}>

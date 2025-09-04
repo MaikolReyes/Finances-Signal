@@ -15,7 +15,7 @@ export const SideNews = () => {
     return (
 
 
-        <div className="h-full flex flex-col gap-5 md:gap-3 md:grid-cols-2 w-full md:w-1/2">
+        <div className="h-full flex flex-col gap-5 md:gap-3 md:grid-cols-2 w-full md:w-3/5 2xl:w-1/2">
             {/* Primera sección: imágenes + contenido */}
             {recentArticles.slice(3, 5).map(({ title, cover, id, publishedAt, slug, contenido }) => {
                 const formattedDate = new Intl.DateTimeFormat("es-ES", {
