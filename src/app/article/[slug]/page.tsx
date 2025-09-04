@@ -34,7 +34,7 @@ export default function Article() {
     const content: BlocksContent = currentArticles?.contenido ?? [];
     const contentResumen: BlocksContent = currentArticles?.resumen ?? [];
     const id = currentArticles?.id || '';
-    const imagen = currentArticles?.cover || '';
+    const imagen = currentArticles?.cover || 'https://www.financessignal.com/images/default-og-image.jpg';
     const title = currentArticles?.title || 'Artículo sin título';
     const url = currentArticles?.slug || '';
     const author = currentArticles?.author.name || 'Autor no disponible';
@@ -68,6 +68,10 @@ export default function Article() {
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
                 <meta property="og:image" content={imagen} />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
+                <meta property="og:image:alt" content={`Imagen del artículo: ${title}`} />
+                <meta property="og:image:type" content="image/webp" />
                 <meta property="og:url" content={`https://www.financessignal.com/article/${url}`} />
 
                 {/* Twitter */}
@@ -75,6 +79,7 @@ export default function Article() {
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={description} />
                 <meta name="twitter:image" content={imagen} />
+                <meta name="twitter:image:alt" content={`Imagen del artículo: ${title}`} />
             </Head>
 
             <div className=' grid grid-cols-1 md:grid-cols-3 mx-auto p-3 md:p-2 mt-2 gap-5'>
