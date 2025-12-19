@@ -38,7 +38,7 @@ export const Navbar = () => {
 
     return (
         <>
-            <nav className="shadow-md z-10 h-full flex flex-col  md:flex-row text-center items-center justify-around md:h-14">
+            <nav className="shadow-md z-10 h-full flex flex-col md:flex-row text-center items-center justify-around md:h-14">
 
                 {/* Logo */}
                 <div className="flex items-start p-3 md:p-0">

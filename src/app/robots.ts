@@ -9,7 +9,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: [
                     '/private/',
                     '/api/', // Opcional: bloquear APIs
-                    '/_next/', // Opcional: bloquear archivos internos de Next.js
                 ],
             }
         ],
