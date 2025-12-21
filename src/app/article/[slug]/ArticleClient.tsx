@@ -7,7 +7,7 @@ import { getCdnUrl } from "../../../utils/getCdnUrl";
 import { socialLinks } from '@/lib/socialLinks';
 import { NewsRelations, SideNews } from '@/components';
 import { DarkModeContext } from '@/context';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -45,6 +45,11 @@ export default function Article() {
     //     .substring(0, 160)
     //     || title;
 
+    useEffect(() => {
+        if (title && title !== 'Artículo sin título') {
+            document.title = title;
+        }
+    }, [title]);
 
     return (
 
