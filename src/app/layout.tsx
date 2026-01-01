@@ -29,8 +29,8 @@ const roboto = Roboto({
 // app/layout.tsx - Cambia tu metadata por esto:
 export const metadata = {
   title: {
-    template: '%s | FinanceSignal',
     default: 'FinanceSignal | Ultimas Noticias',
+    template: '%s | FinanceSignal',
   },
   description: "Mantente informado con las últimas noticias de finanzas y economía. Descubre análisis de mercado, tendencias económicas y consejos financieros en un solo lugar. ¡Tu fuente confiable para tomar decisiones inteligentes!",
   icons: {

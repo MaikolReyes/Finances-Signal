@@ -1,24 +1,48 @@
 "use client";
 //
 import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
-import { useArticlesLanguage } from '@/hooks/useArticlesLanguage';
+// import { useArticlesLanguage } from '@/hooks/useArticlesLanguage';
 import { ShareButtons } from '../../../controls/ShareButtons';
 import { getCdnUrl } from "../../../utils/getCdnUrl";
 import { socialLinks } from '@/lib/socialLinks';
 import { NewsRelations, SideNews } from '@/components';
 import { DarkModeContext } from '@/context';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 
-export default function Article() {
+type ArticleProps = {
+    article: {
+        id: number;
+        title: string;
+        contenido: BlocksContent;
+        resumen: BlocksContent;
+        publishedAt: string;
+        cover: string | null;
+        author: {
+            name: string;
+        }
+    };
+};
+
+
+export default function ArticleClient({ article }: ArticleProps) {
+    const {
+        id,
+        title,
+        contenido,
+        resumen,
+        publishedAt,
+        cover,
+        author,
+    } = article; // 👈 AHORA article SE USA
 
     const { darkMode } = useContext(DarkModeContext);
     // Context
-    const currentArticles = useArticlesLanguage();
+    // const currentArticles = useArticlesLanguage();
 
-    const { publishedAt } = currentArticles || {};
+
 
     const formattedDate = publishedAt
         ? new Intl.DateTimeFormat('es-ES', {
@@ -28,28 +52,6 @@ export default function Article() {
         }).format(new Date(publishedAt))
         : 'Fecha no disponible';
 
-
-    // Article content and metadata
-    const content: BlocksContent = currentArticles?.contenido ?? [];
-    const contentResumen: BlocksContent = currentArticles?.resumen ?? [];
-    const id = currentArticles?.id || '';
-    const imagen = currentArticles?.cover || 'https://www.financessignal.com/images/default-og-image.jpg';
-    const title = currentArticles?.title || 'Artículo sin título';
-    const url = currentArticles?.slug || '';
-    const author = currentArticles?.author.name || 'Autor no disponible';
-
-    // const description = JSON.stringify(contentResumen)
-    //     .match(/"text":"([^"]*)"/g)
-    // //    ?.map(match => match.replace(/"text":"([^"]*)"/, '$1'))
-    //     .join(' ')
-    //     .substring(0, 160)
-    //     || title;
-
-    useEffect(() => {
-        if (title && title !== 'Artículo sin título') {
-            document.title = title;
-        }
-    }, [title]);
 
     return (
 
@@ -73,9 +75,9 @@ export default function Article() {
                         }
                     </div>
 
-                    {imagen && (
+                    {cover && (
                         <Image
-                            src={getCdnUrl(imagen)}
+                            src={cover ? getCdnUrl(cover) : 'https://www.financessignal.com/images/default-og-image.jpg'}
                             className="rounded-xl shadow-lg w-full mx-auto"
                             width={1200}
                             height={500}
@@ -105,7 +107,7 @@ export default function Article() {
                                     rel="noopener noreferrer"
                                     className="text-blue-600 hover:underline"
                                 >
-                                    {author}
+                                    {author.name}
                                 </a>{" "}
                                 <span className="font-normal text-gray-600">
                                     – Analista financiero en FinanceSignal
@@ -120,7 +122,7 @@ export default function Article() {
 
 
                     <div className={`bg-gray-100 rounded p-5 border border-gray-300 shadow-md ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200 text-gray-900'}`}>
-                        <BlocksRenderer content={contentResumen}
+                        <BlocksRenderer content={resumen}
                             blocks={{
                                 paragraph: ({ children }) => <p className="font-title text-base md:text-lg">{children}</p>,
                                 list: ({ children }) => <ul className="list-disc pl-6 text-base md:text-lg">{children}</ul>,
@@ -130,7 +132,7 @@ export default function Article() {
                     </div>
 
                     <div className='mt-4'>
-                        <BlocksRenderer content={content}
+                        <BlocksRenderer content={contenido}
                             blocks={{
                                 paragraph: ({ children }) => (
                                     <p className="font-secondary text-gray-900 text-base md:text-lg">{children}</p>),
@@ -200,7 +202,7 @@ export default function Article() {
                     </div>
                     <ShareButtons
                         title={title}
-                        url={`https://www.financessignal.com/article/${url}`}
+                        url={`https://www.financessignal.com/article/${title}`}
                     />
                     <NewsRelations />
                 </div >

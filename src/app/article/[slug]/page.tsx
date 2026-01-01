@@ -1,74 +1,66 @@
-// app/article/[slug]/page.tsx
 import { Metadata } from "next";
+import { slugify } from "@/app/utils/slugify";
 import ArticleClient from "./ArticleClient";
+import { getArticles } from "@/lib/getArticles";
+
+type PageProps = {
+    params: Promise<{
+        slug: string;
+    }>;
+};
 
 export async function generateMetadata(
-    props: { params: { title: string } }
+    props: PageProps
 ): Promise<Metadata> {
-    const slug = props.params.title;
-    const API_URL = process.env.NEXT_PUBLIC_STRAPI_HOST;
+    const { slug } = await props.params;
 
-    if (!slug || !API_URL) {
+    const articles = await getArticles("es");
+
+    const article = articles.find(
+        a => slugify(a.title) === slug
+    );
+
+    if (!article) {
         return {
-            title: "FinanceSignal",
+            title: "FinanceSignal | Últimas noticias",
         };
     }
 
-    try {
-        const res = await fetch(`${API_URL}/articles/${slug}`, {
-            cache: "no-store",
-        });
-
-        if (!res.ok) {
-            return {
-                title: "FinanceSignal",
-            };
-        }
-
-        const article = await res.json();
-
-        const title = article?.title ?? "FinanceSignal";
-        const description =
-            article?.resumen?.slice(0, 160) ?? title;
-
-        const image =
-            article?.cover ??
-            "https://www.financessignal.com/images/default-og-image.jpg";
-
-        return {
-            title,
-            description,
-            alternates: {
-                canonical: `https://www.financessignal.com/article/${slug}`,
-            },
-            openGraph: {
-                type: "article",
-                siteName: "FinanceSignal",
-                title,
-                description,
-                url: `https://www.financessignal.com/article/${slug}`,
-                images: [
-                    {
-                        url: image,
-                        width: 1200,
-                        height: 630,
-                    },
-                ],
-            },
-            twitter: {
-                card: "summary_large_image",
-                title,
-                description,
-                images: [image],
-            },
-        };
-    } catch {
-        return {
-            title: "FinanceSignal",
-        };
-    }
+    return {
+        title: `${article.title} | FinanceSignal`,
+        description: article.resumen
+            ? undefined
+            : `Análisis financiero sobre ${article.title}`,
+    };
 }
 
-export default function Page() {
-    return <ArticleClient />;
+export default async function Page(props: PageProps) {
+    // 🔑 await params
+    const { slug } = await props.params;
+
+    const articles = await getArticles("es");
+
+    console.log("SLUG URL:", slug);
+
+    articles.forEach(a => {
+        const generatedSlug = a.title
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+
+        console.log("TITLE:", a.title);
+        console.log("SLUG GENERADO:", generatedSlug);
+    });
+
+    const article = articles.find(
+        a => slugify(a.title) === slug
+    );
+
+    if (!article) {
+        return <h1>Artículo no encontrado</h1>;
+    }
+
+    return <ArticleClient article={article} />;
 }

@@ -8,7 +8,7 @@ export async function generateMetadata({
     const category = decodeURIComponent(params.categoryName);
 
     return {
-        title: `FinanceSignal | ${category}`,
+        title: `${category}`,
         alternates: {
             canonical: `https://www.financessignal.com/category/${params.categoryName}`,
         },
