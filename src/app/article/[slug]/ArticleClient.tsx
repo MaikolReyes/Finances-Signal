@@ -200,6 +200,46 @@ export default function ArticleClient({ article }: ArticleProps) {
                         />
                         {/* <Tradingview symbol="NASDAQ:AAPL" /> */}
                     </div>
+
+                    <section
+                        className="mt-6 p-4 bg-gray-100 rounded text-sm text-gray-800 font-title"
+                        aria-label="Información del autor"
+                    >
+                        <h3 className="font-semibold mb-1">
+                            Sobre el autor
+                        </h3>
+
+                        <p>
+                            Maikol Reyes es creador de FinanceSignal, un medio digital enfocado en
+                            economía, finanzas personales y análisis del costo de vida en Argentina.
+                            Analiza información pública, datos oficiales y tendencias del mercado
+                            con un enfoque informativo y educativo para lectores interesados en
+                            comprender el contexto económico actual.
+                        </p>
+                    </section>
+
+
+                    <section
+                        className="mt-6 mb-6 p-4 border-l-4 border-gray-400 bg-gray-50 text-sm text-gray-700 font-title"
+                        aria-label="Aviso legal"
+                    >
+                        <h3 className="font-semibold mb-1">
+                            Aviso legal / Disclaimer
+                        </h3>
+
+                        <p>
+                            Este contenido tiene fines exclusivamente informativos y educativos.
+                            No constituye asesoramiento financiero, legal ni impositivo.
+                            Las decisiones económicas deben tomarse con información actualizada
+                            y, de ser necesario, con el asesoramiento de un profesional matriculado.
+                        </p>
+
+                        <p className="mt-2">
+                            Los contenidos publicados en FinanceSignal se basan en información pública,
+                            fuentes oficiales y análisis editorial propio.
+                        </p>
+                    </section>
+
                     <ShareButtons
                         title={title}
                         url={`https://www.financessignal.com/article/${title}`}

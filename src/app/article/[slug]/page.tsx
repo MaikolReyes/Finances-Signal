@@ -13,7 +13,6 @@ export async function generateMetadata(
     props: PageProps
 ): Promise<Metadata> {
     const { slug } = await props.params;
-
     const articles = await getArticles("es");
 
     const article = articles.find(
@@ -22,15 +21,45 @@ export async function generateMetadata(
 
     if (!article) {
         return {
-            title: "FinanceSignal | Últimas noticias",
+            title: "Últimas noticias",
         };
     }
 
+    // 🔑 URL absoluta de la imagen
+    const imageUrl = article.cover
+        ? article.cover.startsWith("http")
+            ? article.cover
+            : `https://www.financessignal.com${article.cover}`
+        : "https://www.financessignal.com/images/default-og-image.jpg";
+
     return {
-        title: `${article.title} | FinanceSignal`,
-        description: article.resumen
-            ? undefined
-            : `Análisis financiero sobre ${article.title}`,
+        // ⚠️ NO repitas FinanceSignal si usás title.template en layout
+        title: article.title,
+
+        description: `Análisis financiero sobre ${article.title}. Información basada en fuentes públicas y análisis editorial propio.`,
+
+        openGraph: {
+            type: "article",
+            siteName: "FinanceSignal",
+            title: article.title,
+            description: `Análisis financiero sobre ${article.title}.`,
+            url: `https://www.financessignal.com/article/${slug}`,
+            images: [
+                {
+                    url: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: article.title,
+                },
+            ],
+        },
+
+        twitter: {
+            card: "summary_large_image",
+            title: article.title,
+            description: `Análisis financiero sobre ${article.title}.`,
+            images: [imageUrl],
+        },
     };
 }
 
