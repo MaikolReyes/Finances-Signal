@@ -91,7 +91,7 @@ export default function ArticleClient({ article }: ArticleProps) {
                         {/* Foto autor */}
                         <Image
                             src="/images/autor-maikol.png"
-                            alt="Maikol Reyes - Analista financiero en FinanceSignal"
+                            alt="Maikol Reyes - Creador y analista de contenidos de FinanceSignal"
                             width={12}
                             height={12}
                             className="w-12 h-12 rounded-full object-cover border"
@@ -110,7 +110,7 @@ export default function ArticleClient({ article }: ArticleProps) {
                                     {author.name}
                                 </a>{" "}
                                 <span className="font-normal text-gray-600">
-                                    – Analista financiero en FinanceSignal
+                                    - Creador y analista de contenidos de FinanceSignal
                                 </span>
                             </h2>
 
